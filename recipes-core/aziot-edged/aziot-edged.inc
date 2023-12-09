@@ -15,7 +15,7 @@ SRC_URI += "file://aziot-edged.service \
 do_install () {
     # Binaries
     install -d ${D}${bindir}
-    install -m 755 ${WORKDIR}/build/target/${TARGET_SYS}/release/aziot-edged ${D}${bindir}/aziot-edged
+    install -m 755 ${WORKDIR}/build/target/${TARGET_SYS}-gnu/release/aziot-edged ${D}${bindir}/aziot-edged
 
     # Create symbolic links
     install -d ${D}${libexecdir}/aziot
@@ -43,10 +43,11 @@ do_install () {
 
 inherit useradd
 USERADD_PACKAGES = "${PN}"
+GROUPADD_PARAM:${PN} = "-r -g 351 iotedge"
+GROUPADD_PARAM:${PN} = "-r -g 357 edgehubuser"
 USERADD_PARAM:${PN} = "-r -g iotedge -c 'iotedge user' -G docker,systemd-journal,aziotcs,aziotks,aziottpm,aziotid -s /sbin/nologin -d ${localstatedir}/lib/aziot/edged iotedge; "
-USERADD_PARAM:${PN} += "-r -g iotedge -c 'edgeAgent user' -s /bin/sh -u 13622 edgeagentuser; "
-USERADD_PARAM:${PN} += "-r -g iotedge -c 'edgeHub user' -s /bin/sh -u 13623 edgehubuser; "
-GROUPADD_PARAM:${PN} = "-r iotedge"
+USERADD_PARAM:${PN} += "-r -g iotedge -c 'edgeAgent user' -s /bin/sh -u 356  edgeagentuser; "
+USERADD_PARAM:${PN} += "-r -g iotedge -c 'edgeHub user' -s /bin/sh  -u 357 edgehubuser; "
 
 FILES:${PN} += " \
     ${systemd_unitdir}/system/* \
