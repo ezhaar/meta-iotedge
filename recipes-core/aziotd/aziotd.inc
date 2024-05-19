@@ -13,7 +13,6 @@ SYSTEMD_SERVICE:${PN} += "aziot-keyd.service "
 SRC_URI += "file://aziot-certd.service \
             file://aziot-identityd.service \
             file://aziot-keyd.service \
-#            file://aziot-tpmd.service \
             file://keys.generated.rs \
             file://0001-Change-panic-strategy-to-unwind.patch \
 "
@@ -62,8 +61,6 @@ do_install () {
     install -m 644 ${WORKDIR}/git/identity/aziot-identityd/aziot-identityd.socket ${D}${systemd_unitdir}/system
     install -m 644 ${WORKDIR}/aziot-keyd.service ${D}${systemd_unitdir}/system
     install -m 644 ${WORKDIR}/git/key/aziot-keyd/aziot-keyd.socket ${D}${systemd_unitdir}/system
-#    install -m 644 ${WORKDIR}/aziot-tpmd.service ${D}${systemd_unitdir}/system
-#    install -m 644 ${WORKDIR}/git/tpm/aziot-tpmd/aziot-tpmd.socket ${D}${systemd_unitdir}/system
 }
 
 inherit useradd
